@@ -7,6 +7,22 @@ from .models import *
 
 # Create your views here.
 def home_view(request):
+    total_requests = ItemRequest.objects.count()
+    approved_requests = ItemRequest.objects.filter(request_status='approved').count()
+    pending_requests = ItemRequest.objects.filter(request_status='pending').count()
+    declined_requests = ItemRequest.objects.filter(request_status='declined').count()
+
+    if total_requests > 0:
+        approved_percentage = (approved_requests / total_requests) * 100
+    else:
+        approved_percentage = 0
+
+    context = {
+        'total_requests': total_requests,
+        'approved_percentage': approved_percentage,
+        'pending_requests': pending_requests,
+        'declined_requests': declined_requests,
+    }
     return render(request, 'inventory/index.html')
 
 def index(request):
