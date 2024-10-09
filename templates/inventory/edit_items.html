@@ -1,0 +1,47 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Staff</title>
+
+    <!-- Google Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}?v=3.2.0">
+</head>
+
+<body class="hold-transition login-page">
+    <div class="items-box">
+        <div class="card-header text-center">
+            <div class="card-body">
+                <form class="login-form" method="POST" action="{% url 'edit_items' item_id=item.id %}">
+                    <h2 class="text-2xl font-bold text-center mb-6">Edit Item</h2>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit">Edit</button>
+                    {% if form.errors %}
+                        <p style="color:red;">{{ form.non_field_errors }}</p>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+    
+    <!-- Bootstrap -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    
+    <!-- AdminLTE App -->
+    <script src="{% static 'dist/js/adminlte.min.js' %}?v=3.2.0"></script>
+
+    <!-- Demo script (optional) -->
+    <script src="{% static 'dist/js/demo.js' %}"></script>
+</body>
+</html>

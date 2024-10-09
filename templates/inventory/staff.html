@@ -1,0 +1,60 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Requests</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+    <link rel="stylesheet" href="../../static/plugins/fontawesome-free/css/all.min.css">
+    
+    <link rel="stylesheet" href="../../static/dist/css/adminlte.min.css?v=3.2.0">
+</head>
+<body class="hold-transition login-page">
+    <div class="items-box">
+        <div class="card-header text-center">
+        <div class="card-body">
+            <div class="flex items-center justify-between">
+                <h2>Staff Details</h2>
+                <button class="mb-3 text-white px-4 py-2 rounded hover:bg-blue-600"><a href="{% url 'create_staff' %}">Create Staff</a></button>
+            </div>
+            <table class="table-auto w-full border border-gray-300">
+                <thead>
+                    <tr>
+                        <th  class="border border-gray-300 px-4 py-2 text-left">First Name</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Last Name</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Email</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Phone Number</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Department</th>
+                        <th class="border border-gray-300 px-4 py-2 text-left">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for staff in staff %}
+                    <tr>
+                        <td class="border border-gray-300 px-4 py-2">{{ staff.first_name }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ staff.last_name }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ staff.email }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ staff.phone_number }}</td>
+                        <td class="border border-gray-300 px-4 py-2">{{ staff.department }}</td>
+                        <td class="border border-gray-300 px-4 py-2">
+                            <a href="{% url 'edit_staff' staff.id %}">Edit | </a>
+                            <a href="{% url 'delete_staff' staff.id %}">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}               
+                </tbody>           
+            </table>
+        </div>
+        </div>
+    </div>
+
+    <script src="../../static/plugins/jquery/jquery.min.js"></script>
+
+    <script src="../../static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="../../static/dist/js/adminlte.min.js?v=3.2.0"></script>
+    
+    <script src="../../static/dist/js/demo.js"></script> 
+</body>
+</html>
