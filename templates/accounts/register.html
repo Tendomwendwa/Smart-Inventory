@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Registration Page (v2)</title>
+  <title>Smart Inventory</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -17,34 +17,27 @@
 <body class="hold-transition register-page">
 <div class="register-box">
   <div class="card card-outline card-primary">
-    <div class="card-header text-center">
-      <h2><b>Admin LTE</b>
+    <div class="card-header text-center text-danger">
+      <h1><b>Smart</b> Inventory</h1>
     </div>
     <div class="card-body">
       <p class="login-box-msg">Register a new membership</p>
 
-      <form action="{% url 'login' %}" method="post">
+      <form method="POST">
         {% csrf_token %}
-        {{form.as_p}}
-        <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="agreeTerms" name="terms" value="agree">
-              <label for="agreeTerms">
-               I agree to the <a href="#">terms</a>
-              </label>
-            </div>
-          </div>
-          <!-- /.col -->
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Register</button>
-          </div>
-          <!-- /.col -->
+        {{ form.username.label_tag }} {{ form.username }}
+        {{ form.email.label_tag }} {{ form.email }}
+        {{ form.password1.label_tag }} {{ form.password1 }}
+        {{ form.password2.label_tag }} {{ form.password2 }}
+        <div class="text-danger">
+          {% for message in messages %}
+          <p>{{ message }}</p>
+          {% endfor %}
         </div>
+        
+        <button type="submit" class="btn btn-primary m-2">Register</button>
       </form>
-
       
-
       <a href="{% url 'login' %}" class="text-center">I already have a membership</a>
     </div>
     <!-- /.form-box -->

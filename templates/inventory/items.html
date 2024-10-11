@@ -1,17 +1,21 @@
 {% extends 'layouts/a.html' %}
+{% load static %}
 {% block content %}
 
 
-<div class="preloader flex-column justify-content-center align-items-center">
-    <img class="animation__shake" src="static/dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+     <!-- Preloader -->
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="{% static 'dist/img/AdminLTELogo.png' %}" alt="AdminLTELogo" height="60" width="60">
   </div>
 
     <div class="items-box width">
         <div class="card-header text-center">
         <div class="card-body">
-            <div class="flex items-center justify-between">
+            <div class="flex flex-row items-start">
                 <h2>Items</h2>
-                <button class="mb-3 text-white px-4 py-2 rounded hover:bg-blue-600"><a href="{% url 'create_items' %}">Create Item</a></button>
+                <button class="mb-3 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    <a href="{% url 'create_items' %}">Create Item</a>
+                </button>
             </div>
             <table class="table-auto w-full border-collapse border border-gray-300">
                 <thead>

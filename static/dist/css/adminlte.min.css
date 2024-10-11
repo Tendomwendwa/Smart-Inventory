@@ -13143,7 +13143,7 @@ body.sidebar-collapse:not(.sidebar-mini-xs):not(.sidebar-mini-md):not(.sidebar-m
 
 .sidebar-collapse .main-sidebar,
 .sidebar-collapse .main-sidebar::before {
-    margin-left: -250px
+    margin-left: -375px
 }
 
 .sidebar-collapse .main-sidebar .nav-sidebar.nav-child-indent .nav-treeview {
@@ -13155,7 +13155,7 @@ body.sidebar-collapse:not(.sidebar-mini-xs):not(.sidebar-mini-md):not(.sidebar-m
     .main-sidebar,
     .main-sidebar::before {
         box-shadow: none !important;
-        margin-left: -250px
+        margin-left: -375px
     }
 
     .sidebar-open .main-sidebar,
@@ -36967,7 +36967,8 @@ a.disabled.mailbox-attachment-close {
 
 .login-box,
 .register-box {
-    width: 360px
+    width: 360px;
+    margin-left: 100px;
 }
 
 @media (max-width:576px) {
@@ -36986,6 +36987,7 @@ a.disabled.mailbox-attachment-close {
 
 .items-box{
     width: 500px;
+
 }
 
 .login-card-body,
@@ -37049,7 +37051,7 @@ a.disabled.mailbox-attachment-close {
 .register-box-msg {
     margin: 0;
     padding: 0 20px 20px;
-    text-align: center
+    text-align: left
 }
 
 .social-auth-links {
