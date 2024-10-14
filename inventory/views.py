@@ -8,12 +8,12 @@ from .models import *
 # Create your views here.
 def home_view(request):
     total_requests = ItemRequest.objects.count()
-    approved_requests = ItemRequest.objects.filter(request_status='approved').count()
-    pending_requests = ItemRequest.objects.filter(request_status='pending').count()
-    declined_requests = ItemRequest.objects.filter(request_status='declined').count()
+    approved_requests = ItemRequest.objects.filter(request_status='Approved').count()
+    pending_requests = ItemRequest.objects.filter(request_status='Pending').count()
+    declined_requests = ItemRequest.objects.filter(request_status='Declined').count()
 
     if total_requests > 0:
-        approved_percentage = (approved_requests / total_requests) * 100
+        approved_percentage = int((approved_requests / total_requests) * 100)
     else:
         approved_percentage = 0
 
@@ -23,7 +23,8 @@ def home_view(request):
         'pending_requests': pending_requests,
         'declined_requests': declined_requests,
     }
-    return render(request, 'inventory/index.html')
+    return render(request, 'inventory/index.html', context)
+
 
 def index(request):
     return render(request, 'inventory/home.html')
@@ -97,7 +98,6 @@ def delete_items_view(request, item_id):
     item.delete()
     return redirect('items')
     
-
 
 
 def staff_view(request):
@@ -179,8 +179,31 @@ def edit_restocks_view(request, restock_id):
         form.save()
         return redirect('restocks')
     return render(request, 'inventory/edit_restocks.html', {'restock':restock, 'form': form})
+    
 
 def delete_restocks_view(request, restock_id):
     restocks = get_object_or_404(Restock, id=restock_id)
     restocks.delete()
     return redirect('restocks')
+
+
+
+def approved_requests_view(request):
+    approved_requests = ItemRequest.objects.filter(request_status='Approved')
+    context = { 'approved_requests': approved_requests, }
+    return render (request, 'requests/approved_requests.html', context)
+
+def pending_requests_view(request):
+    pending_requests = ItemRequest.objects.filter(request_status='Pending')
+    context = { 'pending_requests': pending_requests, }
+    return render(request, 'requests/pending_requests.html', context)
+
+def declined_requests_view(request):
+    declined_requests = ItemRequest.objects.filter(request_status='Declined')
+    context = { 'declined_requests': declined_requests, }
+    return render(request, 'requests/declined_requests.html', context)
+
+def total_requests_view(request):
+    total_requests = ItemRequest.objects.all()
+    context = { 'total_requests': total_requests, }
+    return render(request, 'requests/total_requests.html', context)

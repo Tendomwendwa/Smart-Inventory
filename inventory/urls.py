@@ -7,6 +7,7 @@ urlpatterns = [
     path('register/', register_view, name='register'),
     path('login/', login_view, name='login'),
     path('logout/', logout_view, name='logout'),
+    
     path('items/', items_view, name='items'),
     path('create_items/', create_items_view, name='create_items'),
     path('items/edit/<int:item_id>/', edit_items_view, name='edit_items'),
@@ -26,4 +27,9 @@ urlpatterns = [
     path('create_restocks/', create_restocks_view, name='create_restocks'),
     path('restocks/edit/<int:restock_id>/', edit_restocks_view, name='edit_restocks'),
     path('restocks/delete/<int:restock_id>/', delete_restocks_view, name='delete_restocks'),
+    
+    path('approved_requests/', approved_requests_view, name='approved_requests'),
+    path('pending_requests/', pending_requests_view, name='pending_requests'),
+    path('declined_requests/', declined_requests_view, name='declined_requests'),
+    path('total_requests', total_requests_view, name='total_requests'),
 ]
