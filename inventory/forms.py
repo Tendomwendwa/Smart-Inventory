@@ -50,3 +50,28 @@ class ItemRequestForm(forms.ModelForm):
     class Meta:
         model = ItemRequest
         fields = ['staff', 'item', 'request_status']
+    
+    
+
+class PasswordResetRequestForm(forms.Form):
+    email = forms.EmailField(max_length=254)
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if not User.objects.filter(email=email).exists():
+            raise forms.ValidationError("We couldn't find an account with that email address.")
+        return email
+
+
+class SetNewPasswordForm(forms.Form):
+    new_password1 = forms.CharField(widget=forms.PasswordInput, label="New password")
+    new_password2 = forms.CharField(widget=forms.PasswordInput, label="Confirm new password")
+
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password1 = cleaned_data.get('new_password1')
+        new_password2 = cleaned_data.get('new_password2')
+
+        if new_password1 and new_password2 and new_password1 != new_password2:
+            raise forms.ValidationError("Passwords do not match.")
+        return cleaned_data

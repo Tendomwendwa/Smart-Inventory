@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -68,7 +69,29 @@ TEMPLATES = [
     },
 ]
 
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
+}
+
 WSGI_APPLICATION = 'smartinventory.wsgi.application'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 
 
 # Database
@@ -102,7 +125,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Authentication settings
-LOGIN_REDIRECT_URL = '/home/' 
+LOGIN_URL = '/login/' 
 LOGOUT_REDIRECT_URL = '/login/' 
 CREATE_ITEMS_REDIRECT_URL = '/create_items/' 
 CREATE_STAFF_REDIRECT_URL = '/create_staff/' 

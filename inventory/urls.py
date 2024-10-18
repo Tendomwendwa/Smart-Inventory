@@ -1,5 +1,7 @@
 from django.urls import path
 from .views import *
+from django.contrib.auth import views as auth_views
+
 
 urlpatterns = [
     path('', home_view, name='home'),
@@ -32,4 +34,10 @@ urlpatterns = [
     path('pending_requests/', pending_requests_view, name='pending_requests'),
     path('declined_requests/', declined_requests_view, name='declined_requests'),
     path('total_requests', total_requests_view, name='total_requests'),
+    
+    
+    path('password_reset/', password_reset_request, name='password_reset'),
+    path('password_reset_done/', lambda request: render(request, 'registration/password_reset_done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', password_reset_confirm, name='password_reset_confirm'),
+    path('reset_done/', lambda request: render(request, 'registration/password_reset_complete.html'), name='password_reset_complete'),
 ]
