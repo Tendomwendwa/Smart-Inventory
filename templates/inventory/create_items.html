@@ -1,21 +1,41 @@
 {% extends 'layouts/a.html' %}
 {% block content %}
 
-<div class="login-box">
-    <div class="card-header">
-    <div class="card-body">
-        <form class="login-form" method="POST" action="{% url 'create_items' %}">
-            <h2 class="text-2xl font-bold text-center mb-6">{% if is_edit %}Edit Item{% else %}Create Item{% endif %}</h2>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit"> {% if is_edit %}Update Item{% else %}Create Item{% endif %}
-        
-            </button>
-            {% if form.errors %}
-                <p style="color:red;">{{ form.non_field_errors }}</p>
-            {% endif %}
-        </form>
-    </div>
+<div class="create-container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Create Items</h3>
+                </div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        {% if error %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                        {% endif %}
+                        <div class="form-group">
+                            <label>Item Name</label>
+                            <input type="text" name="name" class="form-control" placeholder="Item Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Item Status</label>
+                            <select name="item_status" class="form-control" required>
+                                <option value="Available">Available</option>
+                                <option value="Out Of Stock">Out of Stock</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Item Quantity</label>
+                            <input type="number" name="quantity" class="form-control" placeholder="Item Quantity" required>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 

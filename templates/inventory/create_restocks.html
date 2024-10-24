@@ -1,22 +1,30 @@
 {% extends 'layouts/a.html' %}
 {% block content %}
-
-<div class="login-box">
-    <div class="card-header text-center">
-    <div class="card-body">
-        <form class="login-form" method="POST" action="{% url 'create_restocks' %}">
-            <h2 class="text-2xl font-bold text-center mb-6">{% if form.instance.pk %}Edit{% else %}Create{% endif %} Stock</h2>
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded">
-                submit
-            </button>
-            {% if form.errors %}
-                <p style="color:red;">{{ form.non_field_errors }}</p>
-            {% endif %}
-        </form>
-    </div>
+<div class="create-container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Create Restock</h3>
+                </div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Item</label>
+                            <input type="text" name="item" class="form-control" placeholder="Item" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="number" name="quantity" class="form-control" placeholder="Quantity" required>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
-
 {% endblock %}

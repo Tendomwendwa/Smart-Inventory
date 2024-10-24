@@ -593,6 +593,15 @@ pre code {
     margin-left: auto
 }
 
+.create-container-fluid {
+    width: 100%;
+    padding-right: 7.5px;
+    padding-left: 7.5px;
+    margin-right: auto;
+    margin-left: 300px
+}
+
+
 @media (min-width:576px) {
 
     .container,
@@ -13119,7 +13128,12 @@ body.sidebar-collapse:not(.sidebar-mini-xs):not(.sidebar-mini-md):not(.sidebar-m
 }
 
 .content-wrapper>.content {
-    padding: 0 .5rem
+    padding: 0 .5rem;
+    margin-left: -125px;
+}
+
+.content-wrapper>.content-index {
+    padding: 0 .5rem;
 }
 
 .main-sidebar,
@@ -13143,7 +13157,7 @@ body.sidebar-collapse:not(.sidebar-mini-xs):not(.sidebar-mini-md):not(.sidebar-m
 
 .sidebar-collapse .main-sidebar,
 .sidebar-collapse .main-sidebar::before {
-    margin-left: -375px
+    margin-left: -250px
 }
 
 .sidebar-collapse .main-sidebar .nav-sidebar.nav-child-indent .nav-treeview {
@@ -13155,7 +13169,7 @@ body.sidebar-collapse:not(.sidebar-mini-xs):not(.sidebar-mini-md):not(.sidebar-m
     .main-sidebar,
     .main-sidebar::before {
         box-shadow: none !important;
-        margin-left: -375px
+        margin-left: -250px
     }
 
     .sidebar-open .main-sidebar,
@@ -36938,6 +36952,7 @@ a.disabled.mailbox-attachment-close {
     background-color: #6c757d
 }
 
+
 .login-logo,
 .register-logo {
     font-size: 2.1rem;
@@ -36967,8 +36982,7 @@ a.disabled.mailbox-attachment-close {
 
 .login-box,
 .register-box {
-    width: 360px;
-    margin-left: 100px;
+    width: 450px
 }
 
 @media (max-width:576px) {
@@ -36983,11 +36997,6 @@ a.disabled.mailbox-attachment-close {
 .login-box .card,
 .register-box .card {
     margin-bottom: 0
-}
-
-.items-box{
-    width: 700px;
-
 }
 
 .login-card-body,
@@ -37051,7 +37060,7 @@ a.disabled.mailbox-attachment-close {
 .register-box-msg {
     margin: 0;
     padding: 0 20px 20px;
-    text-align: left
+    text-align: center
 }
 
 .social-auth-links {
@@ -37069,6 +37078,7 @@ a.disabled.mailbox-attachment-close {
 .dark-mode .register-logo a {
     color: #fff
 }
+
 
 .error-page {
     margin: 20px auto 0;

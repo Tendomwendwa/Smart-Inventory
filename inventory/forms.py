@@ -1,32 +1,48 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import SetPasswordForm as DjangoSetPasswordForm
+
+
 from .models import *
-
-
-class RegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)
+  
+class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
-        
-    def __init__(self, *args, **kwargs):
-        super(RegisterForm, self).__init__(*args, **kwargs)
-        
-        for field_name in self.fields:
-            self.fields[field_name].help_text = None
-        
-        self.fields['password1'].label = "Password"
-        self.fields['password2'].label = "Confirm Password"
+        fields = ('username', 'email', 'password1', 'password2')
 
-
-class LoginForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.full_name = self.cleaned_data.get('full_name')
+        if commit:
+            user.save()
+        return user
     
-    
+        
+        
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)  # Add an email field for the user
 
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']  # Fields for registration
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.email = self.cleaned_data['email']
+        if commit:
+            user.save()
+        return user
+    
+ 
+class PasswordResetRequestForm(forms.Form):
+    email = forms.EmailField(max_length=254)
+
+class SetPasswordForm(DjangoSetPasswordForm):
+    new_password1 = forms.CharField(label='New password', widget=forms.PasswordInput)
+    new_password2 = forms.CharField(label='Confirm new password', widget=forms.PasswordInput)
+    
 
 class ItemForm(forms.ModelForm):
     class Meta:
@@ -52,26 +68,13 @@ class ItemRequestForm(forms.ModelForm):
         fields = ['staff', 'item', 'request_status']
     
     
-
-class PasswordResetRequestForm(forms.Form):
-    email = forms.EmailField(max_length=254)
-
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        if not User.objects.filter(email=email).exists():
-            raise forms.ValidationError("We couldn't find an account with that email address.")
-        return email
-
-
-class SetNewPasswordForm(forms.Form):
-    new_password1 = forms.CharField(widget=forms.PasswordInput, label="New password")
-    new_password2 = forms.CharField(widget=forms.PasswordInput, label="Confirm new password")
-
-    def clean(self):
-        cleaned_data = super().clean()
-        new_password1 = cleaned_data.get('new_password1')
-        new_password2 = cleaned_data.get('new_password2')
-
-        if new_password1 and new_password2 and new_password1 != new_password2:
-            raise forms.ValidationError("Passwords do not match.")
-        return cleaned_data
+class EditItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        fields = ['name', 'quantity']
+        
+class EditStaffForm(forms.ModelForm):
+    class Meta:
+        model = Staff
+        fields = ['first_name', 'last_name', 'email', 'phone_number', 'department']
+        

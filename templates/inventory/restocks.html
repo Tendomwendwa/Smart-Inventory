@@ -2,37 +2,120 @@
 {% load static %}
 {% block content %}
 
+<div class="content-wrapper">
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row mb-2">
+                                <div class="col-sm-10">
+                                    <h1>Restocks</h1>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button class="mb-3 text-white px-4 py-2 rounded hover:bg-blue-600">
+                                        <a href="{% url 'create_restocks' %}">Create Restock</a>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Quantity</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for restock in restocks %}
+                                    <tr>
+                                        <td>{{ restock.item }}</td>
+                                        <td>{{ restock.quantity }}</td>
+                                        <td>
+                                            <!-- Edit Modal Trigger -->
+                                            <a class="btn btn-primary" href="javascript:void(0);" onclick="editRestock('{{ restock.id }}', '{{ restock.item }}', '{{ restock.quantity }}')" data-toggle="modal" data-target="#editModal-{{ restock.id }}">Edit </a>
+                                           
+                                            <!-- Edit Modal -->
+                                            <div class="modal fade" id="editModal-{{ restock.id }}">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Edit Restock</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form id="editRestockForm-{{ restock.id }}" method="POST" action="{% url 'edit_restocks' restock.id %}">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" id="restockId-{{ restock.id }}" name="restock_id">
+                                                                <div class="mb-3">
+                                                                    <label for="restockItem" class="form-label">Item</label>
+                                                                    <input type="text" class="form-control" id="restockItem-{{ restock.id }}" name="item" required>
+                                                                </div>
+                                                                <div class="mb-3">
+                                                                    <label for="restockQuantity" class="form-label">Quantity</label>
+                                                                    <input type="number" class="form-control" id="restockQuantity-{{ restock.id }}" name="quantity" required>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                        <div class="modal-footer justify-content-between">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <button type="submit" form="editRestockForm-{{ restock.id }}" class="btn btn-primary">Save changes</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
-    <div class="items-box">
-        <div class="card-header">
-        <div class="card-body">
-            <div class="flex items-center justify-between">
-                <h2>Restocks</h2>
-                <button class="mb-3 text-white px-4 py-2 rounded hover:bg-blue-600"><a href="{% url 'create_restocks' %}">Add stock</a></button>
+                                            <!-- Delete Modal Trigger -->
+                                            <a class="btn btn-danger" href data-toggle="modal" data-target="#deleteModal-{{ restock.id }}">Delete</a>
+
+                                            <!-- Delete Modal -->
+                                            <div class="modal fade" id="deleteModal-{{ restock.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-{{ restock.id }}" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteModalLabel-{{ restock.id }}">Confirm Delete</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            Are you sure you want to delete this restock for "{{ restock.item }}"?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                            <form method="POST" action="{% url 'delete_restocks' restock.id %}">
+                                                                {% csrf_token %}
+                                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <table class="table-auto w-full border-collapse border border-gray-300">
-                <thead>
-                    <tr>
-                        <th class="border border-gray-300 px-4 py-2 text-left">Item</th>
-                        <th class="border border-gray-300 px-4 py-2 text-left">Quantity</th>
-                        <th class="border border-gray-300 px-4 py-2 text-left">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for restock in restocks %}
-                    <tr>
-                        <td class="border border-gray-300 px-4 py-2 text-left"> {{ restock.item }} </td>
-                        <td class="border border-gray-300 px-4 py-2 text-left"> {{ restock.quantity }} </td>
-                        <td class="border border-gray-300 px-4 py-2">
-                            <a href="{% url 'edit_restocks' restock.id %}">Edit |</a>
-                            <a href="{% url 'delete_restocks' restock.id %}">Delete</a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
         </div>
-        </div>
-    </div>
+    </section>
+</div>
+
+<script>
+function editRestock(id, item, quantity) {
+    document.getElementById('restockId-' + id).value = id;
+    document.getElementById('restockItem-' + id).value = item;
+    document.getElementById('restockQuantity-' + id).value = quantity;
+}
+</script>
 
 {% endblock %}

@@ -91,7 +91,8 @@ WSGI_APPLICATION = 'smartinventory.wsgi.application'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+
+
 
 
 # Database
@@ -103,6 +104,8 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
 
 
 # Password validation
@@ -125,8 +128,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Authentication settings
-LOGIN_URL = '/login/' 
-LOGOUT_REDIRECT_URL = '/login/' 
+LOGIN_REDIRECT_URL = '/admin/'  
+LOGOUT_REDIRECT_URL = '/'
 CREATE_ITEMS_REDIRECT_URL = '/create_items/' 
 CREATE_STAFF_REDIRECT_URL = '/create_staff/' 
 
