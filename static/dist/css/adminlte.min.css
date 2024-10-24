@@ -36952,6 +36952,14 @@ a.disabled.mailbox-attachment-close {
     background-color: #6c757d
 }
 
+.input-group .form-control {
+    height: 50px; /* Adjust the value as needed */
+  }
+
+  .input-group-text {
+    height: 50px; /* Same height as the input field for alignment */
+  }
+
 
 .login-logo,
 .register-logo {
@@ -36982,7 +36990,8 @@ a.disabled.mailbox-attachment-close {
 
 .login-box,
 .register-box {
-    width: 450px
+    width: 450px;
+    font-size: 1.2rem;
 }
 
 @media (max-width:576px) {

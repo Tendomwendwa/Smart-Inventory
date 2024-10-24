@@ -36,7 +36,6 @@
                                         <td>{{ restock.item }}</td>
                                         <td>{{ restock.quantity }}</td>
                                         <td>
-                                            <!-- Edit Modal Trigger -->
                                             <a class="btn btn-primary" href="javascript:void(0);" onclick="editRestock('{{ restock.id }}', '{{ restock.item }}', '{{ restock.quantity }}')" data-toggle="modal" data-target="#editModal-{{ restock.id }}">Edit </a>
                                            
                                             <!-- Edit Modal -->
@@ -71,7 +70,6 @@
                                                 </div>
                                             </div>
 
-                                            <!-- Delete Modal Trigger -->
                                             <a class="btn btn-danger" href data-toggle="modal" data-target="#deleteModal-{{ restock.id }}">Delete</a>
 
                                             <!-- Delete Modal -->
@@ -85,7 +83,7 @@
                                                             </button>
                                                         </div>
                                                         <div class="modal-body">
-                                                            Are you sure you want to delete this restock for "{{ restock.item }}"?
+                                                            Are you sure you want to delete "{{ restock.item }}"?
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -102,6 +100,39 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
+                        </div>
+                        <!-- pagination -->
+                        <div class="card-header">
+                            <div class="card-title">
+                                <div class="card-tools">
+                                    <div class="pagination pagination-sm">
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">«</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">1</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">2</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">3</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">4</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">5</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">6</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a href="#" class="page-link">»</a>
+                                        </li>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -193,7 +193,6 @@ def create_item_requests_view(request):
 
 
 
-
 def edit_item_requests_view(request, item_requests_id):
     item_request = get_object_or_404(ItemRequest, id=item_requests_id)
     if request.method == "POST":
