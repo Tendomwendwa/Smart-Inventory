@@ -41,40 +41,38 @@ def index(request):
     return render(request, 'inventory/home.html')
 
 
+def register_view(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])  
+            user.save()
+            messages.success(request, "Registration successful. Please log in.")
+            return redirect('login')  
+        else:
+            messages.error(request, "Error in registration form. Please try again.")
+    else:
+        form = RegisterForm()
+    return render(request, 'accounts/register.html', {'form': form})
+
 def login_view(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = LoginForm(request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
-            if user is not None and user.is_staff:  
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
                 login(request, user)
-                return redirect('home')  
+                return redirect('home') 
             else:
-                messages.error(request, "Invalid credentials or not authorized.")
+                messages.error(request, "Invalid username or password.")
         else:
-            messages.error(request, "Invalid username or password.")
+            messages.error(request, "Form data is invalid.")
     else:
-        form = AuthenticationForm()
+        form = LoginForm()
     return render(request, 'accounts/login.html', {'form': form})
-
-
-def register_view(request):
-    if request.method == 'POST':
-        form = CustomUserCreationForm(request.POST)
-        if form.is_valid():
-            user = form.save(commit=False)
-            user.is_staff = True  # Make the user staff so they can access Django admin
-            user.save()
-            messages.success(request, "Registration successful. You can now log in.")
-            return redirect('login')  # Redirect to login page
-        else:
-            messages.error(request, "Error during registration. Please try again.")
-    else:
-        form = CustomUserCreationForm()
-    return render(request, 'accounts/register.html', {'form': form})
-
 
 
 def logout_view(request):

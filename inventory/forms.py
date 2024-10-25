@@ -1,41 +1,29 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import SetPasswordForm as DjangoSetPasswordForm
-
-
 from .models import *
   
-class CustomUserCreationForm(UserCreationForm):
+class RegisterForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+    password_confirm = forms.CharField(widget=forms.PasswordInput, label="Confirm Password")
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2')
+        fields = ['username', 'email', 'password']
 
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.full_name = self.cleaned_data.get('full_name')
-        if commit:
-            user.save()
-        return user
-    
-        
-        
-class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)  # Add an email field for the user
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get("password")
+        password_confirm = cleaned_data.get("password_confirm")
+        if password != password_confirm:
+            self.add_error('password_confirm', "Passwords do not match.")
 
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'password1', 'password2']  # Fields for registration
-
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        user.email = self.cleaned_data['email']
-        if commit:
-            user.save()
-        return user
-    
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Username'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
  
+
 class PasswordResetRequestForm(forms.Form):
     email = forms.EmailField(max_length=254)
 

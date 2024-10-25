@@ -11,7 +11,7 @@
         <form method="post">
           {% csrf_token %}
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="username">
+            <input type="text" name="username" class="form-control" placeholder="Username" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
@@ -19,7 +19,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Email">
+            <input type="email" name="email" class="form-control" placeholder="Email" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
@@ -27,7 +27,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Password">
+            <input type="password" name="password" class="form-control" placeholder="Password" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -35,7 +35,7 @@
             </div>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Retype password">
+            <input type="password" name="password_confirm" class="form-control" placeholder="Retype Password" required>
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -45,7 +45,7 @@
           <div class="row mb-4">
             <div class="col-8">
               <div class="icheck-primary">
-                <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+                <input type="checkbox" id="agreeTerms" name="terms" value="agree" required>
                 <label for="agreeTerms">
                  I agree to the <a href="#">terms</a>
                 </label>
@@ -70,6 +70,17 @@
         </div>
   
         <a href="{% url 'login' %}" class="text-center">I already have a membership</a>
+
+        {% if messages %}
+          <ul class="messages-danger">
+              {% for message in messages %}
+                  <li class="{{ message.tags }}" style="color: red; font-weight: bold;">
+                      {{ message }}
+                  </li>
+              {% endfor %}
+          </ul>
+        {% endif %}
+
       </div>
       <!-- /.form-box -->
     </div><!-- /.card -->
