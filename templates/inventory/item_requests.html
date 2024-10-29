@@ -25,8 +25,8 @@
                             <table id="example2" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Staff</th>
-                                        <th>Item</th>
+                                        <th>Staff Name</th>
+                                        <th>Item Name</th>
                                         <th>Request Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -38,49 +38,69 @@
                                         <td>{{ request.item }}</td>
                                         <td>{{ request.request_status }}</td>
                                         <td>
-                                            <!-- Edit Modal -->
-                                            <a class="btn btn-primary" href="javascript:void(0);" onclick="editRequest('{{ request.id }}', '{{ request.staff }}', '{{ request.item }}', '{{ request.request_status }}')" data-toggle="modal" data-target="#modal-{{ request.id }}">Edit </a>
+                                            
+                                        <a class="btn btn-primary" href="javascript:void(0);" onclick="editRequest('{{ request.id }}')" data-toggle="modal" data-target="#modal-{{ request.id }}">Edit</a>
 
-                                            <div class="modal fade" id="modal-{{ request.id }}">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Edit Request</h4>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form id="editForm-{{ request.id }}" method="POST" action="{% url 'edit_item_requests' request.id %}">
-                                                                {% csrf_token %}
-                                                                <input type="hidden" id="requestId-{{ request.id }}" name="request_id">
-                                                                <div class="mb-3">
-                                                                    <label for="staff" class="form-label">Staff</label>
-                                                                    <input type="text" class="form-control" id="staff-{{ request.id }}" name="staff" value="{{ request.staff }}" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="item" class="form-label">Item</label>
-                                                                    <input type="text" class="form-control" id="item-{{ request.id }}" name="item" value="{{ request.item }}" required>
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="request_status" class="form-label">Request Status</label>
-                                                                    <select class="form-control" id="requestStatus-{{ request.id }}" name="request_status" required>
-                                                                        <option value="Pending" {% if request.request_status == 'Pending' %}selected{% endif %}>Pending</option>
-                                                                        <option value="Approved" {% if request.request_status == 'Approved' %}selected{% endif %}>Approved</option>
-                                                                        <option value="Declined" {% if request.request_status == 'Declined' %}selected{% endif %}>Declined</option>
-                                                                    </select>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                        <div class="modal-footer justify-content-between">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                            <button type="submit" form="editForm-{{ request.id }}" class="btn btn-primary">Save changes</button>
-                                                        </div>
+                                        <div class="modal fade" id="modal-{{ request.id }}">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Edit Request</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form id="editForm-{{ request.id }}" method="POST" action="{% url 'edit_item_requests' request.id %}">
+                                                            {% csrf_token %}
+                                                            <input type="hidden" name="request_id" value="{{ request.id }}">
+
+                                                            
+                                                            <div class="mb-3">
+                                                                <label for="staff-{{ request.id }}" class="form-label">Staff Name</label>
+                                                                <select class="form-control" id="staff-{{ request.id }}" name="staff" required>
+                                                                    {% for staff in staff_list %}
+                                                                        <option value="{{ staff.id }}" {% if request.staff.id == staff.id %}selected{% endif %}>
+                                                                            {{ staff.first_name }} {{ staff.last_name }}
+                                                                        </option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+
+                                                            
+                                                            <div class="mb-3">
+                                                                <label for="item-{{ request.id }}" class="form-label">Item Name</label>
+                                                                <select class="form-control" id="item-{{ request.id }}" name="item" required>
+                                                                    {% for item in item_list %}
+                                                                        <option value="{{ item.id }}" {% if request.item.id == item.id %}selected{% endif %}>
+                                                                            {{ item.name }}
+                                                                        </option>
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+
+                                                            
+                                                            <div class="mb-3">
+                                                                <label for="requestStatus-{{ request.id }}" class="form-label">Request Status</label>
+                                                                <select class="form-control" id="requestStatus-{{ request.id }}" name="request_status" required>
+                                                                    <option value="Pending" {% if request.request_status == 'Pending' %}selected{% endif %}>Pending</option>
+                                                                    <option value="Approved" {% if request.request_status == 'Approved' %}selected{% endif %}>Approved</option>
+                                                                    <option value="Declined" {% if request.request_status == 'Declined' %}selected{% endif %}>Declined</option>
+                                                                </select>
+                                                            </div>
+                                                            
+                                                        </form>
+                                                    </div>
+                                                    <div class="modal-footer justify-content-between">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <button type="submit" form="editForm-{{ request.id }}" class="btn btn-primary">Save changes</button>
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                            
 
-                                            <!--Delete Modal-->
+                                            
                                             <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#deleteModal-{{ request.id }}">Delete</a>
 
                                             <div class="modal fade" id="deleteModal-{{ request.id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel-{{ request.id }}" aria-hidden="true">
@@ -111,7 +131,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- /.card-body -->
+                        
                     <!-- pagination -->
                     <div class="card-header">
                         <div class="card-header">
@@ -149,7 +169,7 @@
                     </div>
                     
                     </div>
-                    <!-- /.card -->
+                    
                 </div>
             </div>
         </div>

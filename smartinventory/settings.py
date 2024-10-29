@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-import logging
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +25,11 @@ SECRET_KEY = 'django-insecure-m*g$3uvqpciv1zw09qm2vnw6#4*-3w72k40^ccxhy=_vwd_exl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '4487-197-237-32-114.ngrok-free.app', 
+]
 
 
 # Application definition
@@ -100,8 +103,15 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hmproj',
+        'USER': 'internUser',
+        'HOST': '64.225.10.172',
+        'PASSWORD': 'internUser@2024',
+        'PORT': '3306',
+        'OPTIONS': {
+            'ssl': {'ssl-disabled': True},
+        },
     }
 }
 

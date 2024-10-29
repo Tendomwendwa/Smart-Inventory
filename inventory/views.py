@@ -102,8 +102,6 @@ def create_items_view(request):
 
     return render(request, 'inventory/create_items.html')
 
-
-
 def edit_items(request, item_id):
     if request.method == 'POST':
         item_id = request.POST.get('item_id')
@@ -166,7 +164,6 @@ def edit_staff_view(request, staff_id):
     else:
         return render(request, 'inventory/staff.html')
 
-
 def delete_staff_view(request, staff_id):
     staff = get_object_or_404(Staff, id=staff_id)
     if request.method == "POST":
@@ -180,6 +177,13 @@ def item_requests_view(request):
     return render(request, 'inventory/item_requests.html', {'item_requests': item_requests_list})
 
 def create_item_requests_view(request):
+    staff_list = Staff.objects.all()
+    item_list = Item.objects.all()
+    context = {
+            'staff_list': staff_list,
+            'item_list': item_list,
+        }
+    
     if request.method == "POST":
         form = ItemRequestForm(request.POST)
         if form.is_valid():
@@ -187,9 +191,9 @@ def create_item_requests_view(request):
             return redirect('item_requests')
     else:
         form = ItemRequestForm()
-    return render(request, 'inventory/create_item_requests.html', {'form': form})
-
-
+        context['form'] = form
+        
+    return render(request, 'inventory/create_item_requests.html', context)
 
 def edit_item_requests_view(request, item_requests_id):
     item_request = get_object_or_404(ItemRequest, id=item_requests_id)
@@ -201,7 +205,6 @@ def edit_item_requests_view(request, item_requests_id):
     else:
         form = ItemRequestForm(instance=item_request)
     return render(request, 'inventory/item_requests.html', {'form': form})
-
 
 def delete_item_requests_view(request, item_requests_id):
     item_request = get_object_or_404(ItemRequest, id=item_requests_id)
@@ -315,7 +318,6 @@ def password_reset_view(request):
 
     return render(request, 'accounts/password_reset.html', {'form': form})
 
-
 def password_reset_confirm_view(request, uidb64=None, token=None):
     try:
         uid = force_str(urlsafe_base64_decode(uidb64))
@@ -334,7 +336,6 @@ def password_reset_confirm_view(request, uidb64=None, token=None):
     else:
         form = None
     return render(request, 'accounts/password_reset_confirm.html', {'form': form})
-
 
 def password_reset_done_view(request):
     return render(request, 'accounts/password_reset_done.html')

@@ -11,7 +11,7 @@ class Staff (models.Model):
     last_name = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
     phone_number = models.CharField(max_length=15)
-    department = models.CharField(max_length=20)
+    department = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):

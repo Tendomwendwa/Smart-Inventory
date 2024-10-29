@@ -14,22 +14,39 @@
                         {% if error %}
                         <div class="alert alert-danger">{{ error }}</div>
                         {% endif %}
+                        
+                        
                         <div class="form-group">
-                            <label>Staff Name</label>
-                            <input type="text" name="staff" class="form-control" placeholder="Staff Name" required>
+                            <label for="staff">Staff Name</label>
+                            <select class="form-control" name="staff" id="staff" required>
+                                <option value="">Select Staff</option>
+                                {% for staff in staff_list %}
+                                    <option value="{{ staff.id }}">{{ staff.first_name }} {{ staff.last_name }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
+                        
+                        
                         <div class="form-group">
-                            <label>Item Name</label>
-                            <input type="text" name="item" class="form-control" placeholder="Item Name" required>
+                            <label for="item">Item Name</label>
+                            <select class="form-control" name="item" id="item" required>
+                                <option value="">Select Item</option>
+                                {% for item in item_list %}
+                                    <option value="{{ item.id }}">{{ item.name }}</option>
+                                {% endfor %}
+                            </select>
                         </div>
+
+                        
                         <div class="form-group">
-                            <label>Request Status</label>
-                            <select name="item_status" class="form-control" required>
+                            <label for="request_status">Request Status</label>
+                            <select name="request_status" class="form-control" required>
                                 <option value="Pending">Pending</option>
                                 <option value="Approved">Approved</option>
                                 <option value="Declined">Declined</option>
                             </select>
                         </div>
+                        
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Submit</button>
