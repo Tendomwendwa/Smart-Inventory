@@ -93,7 +93,7 @@ LOGGING = {
 WSGI_APPLICATION = 'smartinventory.wsgi.application'
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.tendomwendwa400@gmail.com'
 
 
 
